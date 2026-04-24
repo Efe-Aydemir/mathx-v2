@@ -159,7 +159,7 @@ def main():
 
     # Model parameters
     model_name = model_cfg.get("name", "unsloth/Qwen2.5-Math-7B-Instruct-bnb-4bit")
-    max_seq_length = model_cfg.get("max_seq_length", 4096)
+    max_seq_length = int(model_cfg.get("max_seq_length", 2048))
     load_in_4bit = model_cfg.get("load_in_4bit", True)
 
     # LoRA parameters
@@ -211,10 +211,17 @@ def main():
         print("   Local:  pip install 'unsloth @ git+https://github.com/unslothai/unsloth.git'")
         sys.exit(1)
 
+    # Free GPU memory before loading
+    import torch
+    if torch.cuda.is_available():
+        torch.cuda.empty_cache()
+        import gc
+        gc.collect()
+
     model, tokenizer = FastLanguageModel.from_pretrained(
         model_name=model_name,
         max_seq_length=max_seq_length,
-        dtype=None,  # Auto-detect
+        dtype=torch.float16,  # Force float16 — T4 does not support bf16
         load_in_4bit=load_in_4bit,
     )
     print("✅ Model loaded successfully.\n")
