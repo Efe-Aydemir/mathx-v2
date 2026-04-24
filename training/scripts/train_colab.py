@@ -260,19 +260,28 @@ def main():
     from trl import SFTTrainer
     from transformers import TrainingArguments
 
+    # Ensure all values have correct types (defense against YAML string parsing)
+    lr = float(lr)
+    epochs = int(epochs)
+    batch_size = int(batch_size)
+    grad_accum = int(grad_accum)
+    warmup_steps = int(warmup_steps)
+    weight_decay = float(weight_decay)
+    seed = int(seed)
+
     training_args = TrainingArguments(
-        output_dir=output_dir,
+        output_dir=str(output_dir),
         per_device_train_batch_size=batch_size,
         gradient_accumulation_steps=grad_accum,
         num_train_epochs=epochs,
         learning_rate=lr,
         warmup_steps=warmup_steps,
-        logging_steps=logging_steps,
-        save_steps=save_steps,
+        logging_steps=int(logging_steps),
+        save_steps=int(save_steps),
         save_total_limit=3,
-        optim=optim,
+        optim=str(optim),
         weight_decay=weight_decay,
-        lr_scheduler_type=lr_scheduler,
+        lr_scheduler_type=str(lr_scheduler),
         seed=seed,
         fp16=True,
         bf16=False,
