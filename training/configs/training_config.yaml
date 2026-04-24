@@ -1,0 +1,48 @@
+# Training configuration for Qwen2.5-Math fine-tuning with Unsloth
+
+model:
+  name: "unsloth/Qwen2.5-Math-7B"
+  max_seq_length: 8192
+  load_in_4bit: true
+
+lora:
+  r: 32
+  lora_alpha: 16
+  lora_dropout: 0
+  bias: "none"
+  target_modules:
+    - q_proj
+    - k_proj
+    - v_proj
+    - o_proj
+    - gate_proj
+    - up_proj
+    - down_proj
+  use_gradient_checkpointing: "unsloth"
+
+training:
+  per_device_train_batch_size: 2
+  gradient_accumulation_steps: 4
+  learning_rate: 2e-4
+  num_train_epochs: 3
+  warmup_steps: 10
+  fp16: true
+  logging_steps: 10
+  save_steps: 100
+  output_dir: "outputs"
+  optim: "adamw_8bit"
+  weight_decay: 0.01
+  lr_scheduler_type: "linear"
+  seed: 42
+
+dataset:
+  path: "../data/dataset.jsonl"
+  text_field: "text"
+  
+prompt_template: |
+  <|im_start|>system
+  {instruction}<|im_end|>
+  <|im_start|>user
+  {input}<|im_end|>
+  <|im_start|>assistant
+  {output}<|im_end|>

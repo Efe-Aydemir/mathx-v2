@@ -1,0 +1,30 @@
+# Training dependencies for Anti-MathX fine-tuning
+#
+# NOTE: For Google Colab, use the following install commands instead:
+#   !pip install "unsloth[colab-new] @ git+https://github.com/unslothai/unsloth.git"
+#   !pip install --no-deps trl peft accelerate bitsandbytes xformers
+#
+# For local/RunPod (requires CUDA GPU):
+#   pip install -r requirements.txt
+
+# Unsloth (fast LoRA training)
+unsloth @ git+https://github.com/unslothai/unsloth.git
+
+# HuggingFace ecosystem
+transformers>=4.45.0
+datasets>=3.0.0
+trl>=0.12.0
+peft>=0.13.0
+accelerate>=1.0.0
+
+# Quantization
+bitsandbytes>=0.44.0
+
+# Config
+pyyaml>=6.0
+
+# vLLM (for deployment, install separately)
+# vllm>=0.6.0
+
+# ngrok (for Colab deployment, optional)
+# pyngrok>=7.0.0
