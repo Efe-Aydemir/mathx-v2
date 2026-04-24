@@ -158,7 +158,7 @@ def main():
     train_cfg = config.get("training", {})
 
     # Model parameters
-    model_name = model_cfg.get("name", "unsloth/Qwen2.5-Math-7B")
+    model_name = model_cfg.get("name", "unsloth/Qwen2.5-Math-7B-Instruct-bnb-4bit")
     max_seq_length = model_cfg.get("max_seq_length", 4096)
     load_in_4bit = model_cfg.get("load_in_4bit", True)
 
