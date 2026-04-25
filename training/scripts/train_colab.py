@@ -159,7 +159,7 @@ def main():
 
     # Model parameters
     model_name = model_cfg.get("name", "unsloth/Qwen2.5-Math-7B-Instruct-bnb-4bit")
-    max_seq_length = int(model_cfg.get("max_seq_length", 2048))
+    max_seq_length = int(model_cfg.get("max_seq_length", 1024))
     load_in_4bit = model_cfg.get("load_in_4bit", True)
 
     # LoRA parameters
